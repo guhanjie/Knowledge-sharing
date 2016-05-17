@@ -1,12 +1,13 @@
 CREATE TABLE `alarm_item` (
 `id`  bigint NOT NULL AUTO_INCREMENT ,
 `name`  varchar(50) NULL COMMENT '报警项名称' ,
-`mode`  int NULL COMMENT '报警方式（0:瞬时报警, 1:周期报警, 2:累计报警）' ,
+`group`  varchar(50) NULL COMMENT '报警项组名称' ,
+`mode`  int NULL COMMENT '报警方式（1:瞬时报警, 2:周期报警, 3:累计报警）' ,
 `targets`  varchar(500) NULL COMMENT '报警监控目标（可多个，分隔）' ,
 `metrics`  varchar(500) NULL COMMENT '报警监控指标（可多个，分隔）' ,
 `rule_scirpt`  text NULL COMMENT '报警规则脚本' ,
 `interval`  int NULL COMMENT '报警任务调度周期（以秒为单位）' ,
-`status`  int NULL COMMENT '运行时状态（0:新建, 1:运行中, 2:暂停, 3:终止）' ,
+`status`  char(1) NULL COMMENT '运行时状态（N:新建, R:运行中, P:暂停, T:终止）' ,
 `disabled`  tinyint NULL DEFAULT 0 COMMENT '是否可用（0可用，1禁用）' ,
 `receiver`  varchar(255) NULL COMMENT '报警接收者(可多个，分隔)' ,
 `receiver_phone`  varchar(255) NULL COMMENT '报警接收者电话（可多个，分隔）' ,
@@ -24,7 +25,7 @@ DEFAULT CHARACTER SET=utf8
 COMMENT='报警项定义表'
 ;
 
-CREATE TABLE `alram_recorde` (
+CREATE TABLE `alram_record` (
 `id`  bigint NOT NULL ,
 `alarm_item_id`  bigint NULL COMMENT '报警项ID' ,
 `alarm_values`  varchar(500) NULL COMMENT '报警指标值（可多个，分隔且按规则脚本占位顺序排列）' ,
